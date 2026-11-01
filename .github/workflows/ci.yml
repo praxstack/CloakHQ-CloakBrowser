@@ -9,6 +9,9 @@ on:
 jobs:
   python:
     runs-on: ubuntu-latest
+    # real_browser tests launch the binary, which needs a key (see javascript-browser).
+    env:
+      CLOAKBROWSER_LICENSE_KEY: ${{ secrets.CLOAKBROWSER_CI_KEY }}
     steps:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1  # v7.0.1
       - uses: actions/setup-python@6d4fd22b20465ccc0f7354476588e8df7c9ca0e0  # v7.1.0
@@ -17,7 +20,11 @@ jobs:
       - name: Install dependencies
         run: pip install -e ".[dev]" pytest pytest-asyncio
       - name: Run tests
-        run: pytest tests/ -v -m "not slow"
+        # Fork PRs get no secrets: run everything except the real-browser tests there.
+        run: |
+          if [ -n "$CLOAKBROWSER_LICENSE_KEY" ]; then pytest tests/ -v -m "not slow"
+          else echo "::notice::Real-browser tests skipped: no license key (PRs from forks get no secrets)."
+            pytest tests/ -v -m "not slow and not real_browser"; fi
 
   javascript:
     runs-on: ubuntu-latest

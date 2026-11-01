@@ -68,6 +68,7 @@ def test_login_no_key_non_interactive_exits(cache_dir):
 def test_login_enter_claims_free_key_by_email(cache_dir):
     """ENTER opens this install's claim link, waits for the key, then saves it."""
     with mock.patch("cloakbrowser.download._isatty", return_value=True), \
+            mock.patch("cloakbrowser.download._has_display", return_value=True), \
             mock.patch("builtins.input", return_value=""), \
             mock.patch("webbrowser.open") as opened, \
             mock.patch("cloakbrowser.license.check_claim", side_effect=[None, "cb_claimed"]), \

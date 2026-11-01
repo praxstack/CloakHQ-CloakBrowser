@@ -203,6 +203,7 @@ def test_no_key_in_terminal_menu_default_gets_free_key(cache, monkeypatch, capsy
     monkeypatch.setattr(lic, "check_claim", lambda code: next(answers))
     monkeypatch.setattr(lic.time, "sleep", lambda s: None)
     monkeypatch.setattr(download, "_isatty", lambda s: True)
+    monkeypatch.setattr(download, "_has_display", lambda: True)  # CI runners have none
     seen = _valid_launch(monkeypatch)
     with mock.patch("builtins.input", return_value="") as ask, \
             mock.patch("webbrowser.open", return_value=True) as opened:
