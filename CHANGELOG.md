@@ -6,7 +6,7 @@ Changes are tagged: **[wrapper]** for Python/JS wrapper, **[binary]** for Chromi
 
 ---
 
-## [0.7.0] — unreleased
+## [0.7.0] — 2026-11-01
 
 **Breaking: every launch now needs a license key.** A free key takes one email and gets the latest build (1 concurrent session). The old keyless v146 build is no longer downloaded. To keep running it without a key, stay on the 0.6 wrapper: `pip install "cloakbrowser<0.7"`, `npm install cloakbrowser@0.6`, `dotnet add package CloakBrowser --version 0.6.5`, or the Docker image `cloakhq/cloakbrowser:0.6.5`.
 
